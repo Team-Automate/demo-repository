@@ -23,7 +23,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,500&family=Geist:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -206,23 +206,36 @@ nav.scrolled .ham span{background:var(--ink)}
 .km-fv.warn{color:var(--amber)}
 .km-tag{position:absolute;top:.5rem;right:.7rem;font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(243,239,228,.3);background:rgba(0,0,0,.4);padding:.18rem .42rem}
 
-/* ── SERVICES ── */
+/* ── SERVICES (interactive flip cards) ── */
 .services{background:var(--paper)}
-.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+.srv-hint{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t-muted);margin-top:1.1rem;display:inline-flex;align-items:center;gap:.55rem}
+.srv-hint .sh-i{display:inline-flex;width:22px;height:22px;border:1px solid var(--terra);color:var(--terra);border-radius:50%;align-items:center;justify-content:center;font-size:.8rem;animation:nudge 2.4s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:rotate(0)}50%{transform:rotate(180deg)}}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.2rem}
 @media(max-width:880px){.srv-grid{grid-template-columns:1fr}}
-.srv-card{position:relative;padding:2.2rem 1.9rem;background:var(--paper-2);border:1px solid var(--line);transition:transform .15s ease-out,box-shadow .3s,background .3s;transform-style:preserve-3d;will-change:transform;overflow:hidden;border-radius:6px}
-.srv-card::before{content:'';position:absolute;inset:0;background:var(--ink);transform:translateY(101%);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:0}
-.srv-card:hover::before{transform:translateY(0)}
-.srv-card>*{position:relative;z-index:1;transition:color .3s}
-.srv-card:hover{box-shadow:0 24px 50px -20px rgba(16,21,13,.35)}
-.srv-card:hover .srv-title,.srv-card:hover .srv-n{color:var(--paper)}
-.srv-card:hover .srv-txt{color:var(--b-body)}
+.srv-card{position:relative;min-height:308px;background:transparent;border:none;border-radius:8px;perspective:1500px;outline:none;cursor:pointer}
+.srv-inner{position:relative;width:100%;height:100%;min-height:308px;transition:transform .7s cubic-bezier(.2,.85,.25,1);transform-style:preserve-3d}
+.srv-card.flipped .srv-inner{transform:rotateY(180deg)}
+.srv-face{position:absolute;inset:0;display:flex;flex-direction:column;padding:2.05rem 1.8rem;border:1px solid var(--line);border-radius:8px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.srv-front{background:var(--paper-2);transition:box-shadow .3s,border-color .3s,transform .3s}
+.srv-card:hover .srv-front{box-shadow:0 26px 50px -24px rgba(16,21,13,.42);border-color:rgba(212,103,58,.45);transform:translateY(-4px)}
+.srv-card:focus-visible .srv-front{border-color:var(--terra);box-shadow:0 0 0 2px rgba(212,103,58,.35)}
+.srv-back{background:linear-gradient(160deg,var(--forest) 0%,var(--ink) 100%);color:var(--paper);transform:rotateY(180deg);justify-content:space-between}
+.srv-back::before{content:'';position:absolute;top:-42%;right:-32%;width:85%;height:85%;background:radial-gradient(circle,var(--glow),transparent 62%);opacity:.55;pointer-events:none}
 .srv-n{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.1em;color:var(--terra)}
 .srv-ico{width:38px;height:38px;color:var(--ink);margin:1.1rem 0 .9rem;transition:color .3s,transform .3s}
 .srv-ico svg{width:100%;height:100%;display:block}
 .srv-card:hover .srv-ico{color:var(--terra);transform:translateY(-2px) scale(1.05)}
 .srv-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.02em;color:var(--ink);margin-bottom:.5rem}
-.srv-txt{font-size:.92rem;line-height:1.6;color:var(--t-body)}
+.srv-txt{font-size:.92rem;line-height:1.6;color:var(--t-body);flex:1}
+.srv-flip{margin-top:.9rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);display:inline-flex;align-items:center;gap:.45rem;opacity:.85}
+.srv-flip::before{content:'↻';font-size:.9rem}
+.srv-back-k{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);position:relative}
+.srv-back-hook{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.48rem;line-height:1.3;color:var(--paper);margin:.65rem 0 .85rem;position:relative}
+.srv-back-txt{font-size:.88rem;line-height:1.58;color:var(--b-body);position:relative;flex:1}
+.srv-cta{margin-top:1rem;align-self:flex-start;font-family:'Space Mono',monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--terra);padding:.7rem 1.05rem;border-radius:4px;text-decoration:none;position:relative;transition:background .2s,transform .2s}
+.srv-cta:hover{background:var(--terra-d);transform:translateX(3px)}
+.srv-back-min{position:absolute;top:1rem;right:1.15rem;font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.08em;color:var(--ash);text-transform:uppercase;z-index:2}
 
 /* ── PROJECTS ── */
 .projects{background:var(--paper-2)}
@@ -532,25 +545,123 @@ footer{background:var(--ink);color:var(--paper);padding:2.6rem 2rem;display:flex
   <div class="wrap">
     <div class="eyebrow reveal">What We Build</div>
     <h2 class="sec-h reveal rd1">Everything your business<br>needs to <span class="italic">go digital.</span></h2>
+    <div class="srv-hint reveal rd2"><span class="sh-i">↻</span>Tap any card — see what it could do for your business</div>
     <div class="srv-grid">
-      <div class="srv-card tilt reveal rd1"><div class="srv-n">01</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a12 12 0 0 1 20.5-8.5"/><path d="M24 5v4h-4"/><path d="M28 16a12 12 0 0 1-20.5 8.5"/><path d="M8 27v-4h4"/><circle cx="16" cy="16" r="2.5"/></svg></div>
-        <div class="srv-title">Business Automation</div><div class="srv-txt">Eliminate repetitive manual tasks — invoicing, reports, data entry. Automated, accurate, always on.</div></div>
-      <div class="srv-card tilt reveal rd2"><div class="srv-n">02</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="26" rx="2.5"/><path d="M13 25h6"/><path d="M12 9l-2 2 2 2M20 9l2 2-2 2M17 8l-2 6"/></svg></div>
-        <div class="srv-title">Custom App Development</div><div class="srv-txt">Purpose-built web and mobile apps designed around exactly how your business operates.</div></div>
-      <div class="srv-card tilt reveal rd3"><div class="srv-n">03</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="2.4"/><circle cx="25" cy="7" r="2.4"/><circle cx="16" cy="16" r="3"/><circle cx="7" cy="25" r="2.4"/><circle cx="25" cy="25" r="2.4"/><line x1="8.8" y1="8.6" x2="13.5" y2="14.4"/><line x1="23.2" y1="8.6" x2="18.5" y2="14.4"/><line x1="8.8" y1="23.4" x2="13.5" y2="17.6"/><line x1="23.2" y1="23.4" x2="18.5" y2="17.6"/></svg></div>
-        <div class="srv-title">AI &amp; Intelligence Systems</div><div class="srv-txt">Smart dashboards, predictive analytics and AI-assisted decisions — insight, not guesswork.</div></div>
-      <div class="srv-card tilt reveal rd1"><div class="srv-n">04</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="18" width="11" height="11"/><rect x="18" y="18" width="11" height="11"/><rect x="10.5" y="3" width="11" height="11"/><path d="M3 18l5.5-4M29 18l-5.5-4"/></svg></div>
-        <div class="srv-title">Stock &amp; Inventory</div><div class="srv-txt">Real-time tracking, invoicing and business reporting — already live and proven in Zimbabwe.</div></div>
-      <div class="srv-card tilt reveal rd2"><div class="srv-n">05</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 24a6.5 6.5 0 0 1 0-13 8 8 0 0 1 15 3 5.5 5.5 0 0 1-2 10.5z"/><path d="M16 20v-6M12 16l4-4 4 4"/></svg></div>
-        <div class="srv-title">Cloud &amp; Infrastructure</div><div class="srv-txt">Azure cloud setup, scalable hosting and reliable infrastructure for businesses built to grow.</div></div>
-      <div class="srv-card tilt reveal rd3"><div class="srv-n">06</div>
-        <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h5l3-7 6 14 3-7h9"/></svg></div>
-        <div class="srv-title">Fitness &amp; Wellness Tech</div><div class="srv-txt">Next-gen fitness platforms with tracking, AI coaching and community tools. In development.</div></div>
+
+      <div class="srv-card reveal rd1" tabindex="0" role="button" aria-label="Business Automation — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">01</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16a12 12 0 0 1 20.5-8.5"/><path d="M24 5v4h-4"/><path d="M28 16a12 12 0 0 1-20.5 8.5"/><path d="M8 27v-4h4"/><circle cx="16" cy="16" r="2.5"/></svg></div>
+            <div class="srv-title">Business Automation</div>
+            <div class="srv-txt">Eliminate repetitive manual tasks — invoicing, reports, data entry. Automated, accurate, always on.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">The hidden cost</div>
+            <div class="srv-back-hook">"Your team loses 10–15 hours a week to manual admin."</div>
+            <div class="srv-back-txt">We automate invoicing, reports and data entry so the busywork runs itself — accurate, every time, even while you sleep.</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('Business Automation',event)">Automate my admin →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-card reveal rd2" tabindex="0" role="button" aria-label="Custom App Development — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">02</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="3" width="16" height="26" rx="2.5"/><path d="M13 25h6"/><path d="M12 9l-2 2 2 2M20 9l2 2-2 2M17 8l-2 6"/></svg></div>
+            <div class="srv-title">Custom App Development</div>
+            <div class="srv-txt">Purpose-built web and mobile apps designed around exactly how your business operates.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">Built around you</div>
+            <div class="srv-back-hook">"Off-the-shelf software makes your business fit the tool."</div>
+            <div class="srv-back-txt">We flip that — a web or mobile app shaped to exactly how you already work. Nothing bloated, nothing missing.</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('Custom App Development',event)">Scope my app →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-card reveal rd3" tabindex="0" role="button" aria-label="AI and Intelligence Systems — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">03</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="2.4"/><circle cx="25" cy="7" r="2.4"/><circle cx="16" cy="16" r="3"/><circle cx="7" cy="25" r="2.4"/><circle cx="25" cy="25" r="2.4"/><line x1="8.8" y1="8.6" x2="13.5" y2="14.4"/><line x1="23.2" y1="8.6" x2="18.5" y2="14.4"/><line x1="8.8" y1="23.4" x2="13.5" y2="17.6"/><line x1="23.2" y1="23.4" x2="18.5" y2="17.6"/></svg></div>
+            <div class="srv-title">AI &amp; Intelligence Systems</div>
+            <div class="srv-txt">Smart dashboards, predictive analytics and AI-assisted decisions — insight, not guesswork.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">Stop guessing</div>
+            <div class="srv-back-hook">"Your numbers already know what to stock, and when."</div>
+            <div class="srv-back-txt">Smart dashboards and AI turn your data into clear decisions — what's working, what's leaking, and what to do next.</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('AI &amp; Intelligence Systems',event)">Show me my numbers →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-card reveal rd1" tabindex="0" role="button" aria-label="Stock and Inventory — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">04</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="18" width="11" height="11"/><rect x="18" y="18" width="11" height="11"/><rect x="10.5" y="3" width="11" height="11"/><path d="M3 18l5.5-4M29 18l-5.5-4"/></svg></div>
+            <div class="srv-title">Stock &amp; Inventory</div>
+            <div class="srv-txt">Real-time tracking, invoicing and business reporting — already live and proven in Zimbabwe.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">Proven in Kadoma</div>
+            <div class="srv-back-hook">"We had 50 last week. Now 30. Where did 20 go?"</div>
+            <div class="srv-back-txt">If you can't answer instantly, you're leaking profit. Real-time stock, invoicing and reports — already live and trusted in Zimbabwe.</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('Stock &amp; Inventory Management',event)">Fix my stock →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-card reveal rd2" tabindex="0" role="button" aria-label="Cloud and Infrastructure — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">05</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 24a6.5 6.5 0 0 1 0-13 8 8 0 0 1 15 3 5.5 5.5 0 0 1-2 10.5z"/><path d="M16 20v-6M12 16l4-4 4 4"/></svg></div>
+            <div class="srv-title">Cloud &amp; Infrastructure</div>
+            <div class="srv-txt">Azure cloud setup, scalable hosting and reliable infrastructure for businesses built to grow.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">Sleep easy</div>
+            <div class="srv-back-hook">"Your whole business is one spilled coffee from disaster."</div>
+            <div class="srv-back-txt">Secure Azure cloud, automatic backups and hosting that scales as you grow — so nothing critical lives on one fragile laptop.</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('Cloud &amp; Infrastructure',event)">Secure my business →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-card reveal rd3" tabindex="0" role="button" aria-label="Fitness and Wellness Tech — tap to learn more" onclick="flipCard(this,event)" onkeydown="flipKey(this,event)">
+        <div class="srv-inner">
+          <div class="srv-face srv-front">
+            <div class="srv-n">06</div>
+            <div class="srv-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h5l3-7 6 14 3-7h9"/></svg></div>
+            <div class="srv-title">Fitness &amp; Wellness Tech</div>
+            <div class="srv-txt">Next-gen fitness platforms with tracking, AI coaching and community tools. In development.</div>
+            <div class="srv-flip">Tap to see how</div>
+          </div>
+          <div class="srv-face srv-back">
+            <div class="srv-back-min">↺ back</div>
+            <div class="srv-back-k">In development</div>
+            <div class="srv-back-hook">"The platform behind the next generation of coaching."</div>
+            <div class="srv-back-txt">AI coaching, performance tracking and community — built for trainers and gyms ready to scale. Want to build the next big one with us?</div>
+            <a class="srv-cta" href="#contact" onclick="pickService('General Consultation',event)">Partner with us →</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -798,16 +909,27 @@ footer{background:var(--ink);color:var(--paper);padding:2.6rem 2rem;display:flex
   <a class="m-au" href="#contact">Book Free Audit</a>
 </div>
 
-<!-- Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* ══ PRELOADER ══ */
-window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('pre').classList.add('done'),550)});
-setTimeout(()=>document.getElementById('pre').classList.add('done'),3500); // safety
+/* ══ PRELOADER (clears fast — 3D streams in behind it) ══ */
+function hidePre(){var p=document.getElementById('pre');if(p)p.classList.add('done')}
+window.addEventListener('DOMContentLoaded',()=>setTimeout(hidePre,300));
+window.addEventListener('load',hidePre);
+setTimeout(hidePre,2000); // safety
 
 /* ══ MOBILE MENU ══ */
 function mToggle(){const m=document.getElementById('mobMenu'),h=document.getElementById('ham');m.classList.toggle('open');h.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':''}
 function mClose(){document.getElementById('mobMenu').classList.remove('open');document.getElementById('ham').classList.remove('open');document.body.style.overflow=''}
+
+/* ══ SERVICE FLIP CARDS ══ */
+function flipCard(card,e){if(e&&e.target&&e.target.closest&&e.target.closest('.srv-cta'))return;card.classList.toggle('flipped')}
+function flipKey(card,e){if(e.key==='Enter'||e.key===' '){e.preventDefault();card.classList.toggle('flipped')}}
+function pickService(name,e){if(e){e.stopPropagation()}
+  var s=document.getElementById('cSvc');
+  if(s){var hit=false;for(var i=0;i<s.options.length;i++){if(s.options[i].text===name){s.selectedIndex=i;hit=true;break}}
+    if(!hit){for(var j=0;j<s.options.length;j++){if(s.options[j].text.indexOf('General')>-1){s.selectedIndex=j;break}}}}
+  var m=document.getElementById('cMsg');
+  if(m&&!m.value){m.value='I’m interested in '+name+' for my business — can you show me what that would look like?'}
+}
 
 /* ══ NAV SCROLL + PROGRESS + HERO FX FADE + MOBILE CTA ══ */
 const nav=document.getElementById('nav'),prog=document.getElementById('prog'),heroFx=document.getElementById('heroFx'),mcta=document.getElementById('mcta');
@@ -860,10 +982,28 @@ if(finePointer&&!reduceMotion){document.querySelectorAll('.tilt').forEach(card=>
   const coarse=window.matchMedia('(pointer:coarse)').matches;
   const mem=navigator.deviceMemory,cores=navigator.hardwareConcurrency;
   const lowHardware=(mem&&mem<4)||(cores&&cores<4);
-  const use3D=window.THREE&&hasWebGL()&&!reduceMotion&&!lowHardware&&!(coarse&&window.innerWidth<820);
-  if(use3D){try{aurora.style.opacity='.35';runHero3D();return}catch(e){}}
-  // fallback: keep the CSS aurora + a light 2D particle layer
-  runHero2D();
+  const use3D=hasWebGL()&&!reduceMotion&&!lowHardware&&!(coarse&&window.innerWidth<820);
+  if(use3D){
+    aurora.style.opacity='.35';
+    loadThree(function(ok){
+      if(ok&&window.THREE){try{runHero3D();return}catch(e){}}
+      runHero2D(); // graceful fallback if 3D fails to load
+    });
+  }else{
+    runHero2D(); // phones / low-end / reduced-motion: instant, light, no 580KB download
+  }
+
+  // Three.js is fetched ONLY for capable desktops, and only after first paint
+  function loadThree(cb){
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    s.async=true;var done=false;
+    function fin(ok){if(!done){done=true;cb(ok)}}
+    s.onload=function(){fin(true)};
+    s.onerror=function(){fin(false)};
+    setTimeout(function(){fin(!!window.THREE)},6000);
+    (window.requestIdleCallback||function(f){setTimeout(f,200)})(function(){document.head.appendChild(s)});
+  }
 
   function runHero2D(){
     const ctx=canvas.getContext('2d');let W,H,pts=[],mouse={x:-999,y:-999},raf;
